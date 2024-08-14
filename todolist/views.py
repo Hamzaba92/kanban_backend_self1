@@ -48,6 +48,8 @@ class RegisterView(View):
 def csrf_token_view(request):
     return JsonResponse({'csrfToken': get_token(request)})
 
+
+
 @csrf_exempt
 def login_view(request):
     if request.method == 'POST':

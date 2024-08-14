@@ -28,4 +28,5 @@ urlpatterns = [
     path('api/register/', RegisterView.as_view(), name='register'),
     path('api/csrf-token/', csrf_token_view, name='csrf-token'),
     path('api/login/', login_view, name='login'),
+    
 ]
