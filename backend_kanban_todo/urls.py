@@ -19,7 +19,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from todolist.views import RegisterView
-from todolist.views import csrf_token_view
+from todolist.views import csrf_token_view, login_view
 
 
 urlpatterns = [
@@ -27,4 +27,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/register/', RegisterView.as_view(), name='register'),
     path('api/csrf-token/', csrf_token_view, name='csrf-token'),
+    path('api/login/', login_view, name='login'),
 ]
