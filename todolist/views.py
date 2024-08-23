@@ -14,8 +14,9 @@ from rest_framework import status
 from .models import Task
 from .serializers import TaskSerializer
 from rest_framework.generics import ListAPIView
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from django.contrib.sessions.backends.db import SessionStore
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
+from rest_framework.decorators import api_view
 
 @method_decorator(csrf_exempt, name='dispatch')
 class RegisterView(View):
@@ -43,14 +44,17 @@ class RegisterView(View):
             return JsonResponse({'error': f'Missing field {str(e)}'}, status=400)
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
+        
 
 
-def csrf_token_view(request):
-    return JsonResponse({'csrfToken': get_token(request)})
+@api_view(["GET"])
+@ensure_csrf_cookie
+def get_csrf_token(request):
+    csrf_token = get_token(request)
+    return JsonResponse({'csrfToken': csrf_token})
 
 
-
-@csrf_exempt
+@csrf_protect
 def login_view(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -66,6 +70,8 @@ def login_view(request):
     return JsonResponse({'error': 'Invalid method'}, status=405)
 
 
+
+
 class TaskDeleteView(APIView):
     def delete(self, request, pk, *args, **kwargs):
         try:
@@ -76,6 +82,7 @@ class TaskDeleteView(APIView):
             return Response({"error": "Task not found"}, status=status.HTTP_404_NOT_FOUND)
 
         
+
 
 class TaskUpdateView(APIView):
     def put(self, request, pk, *args, **kwargs):
@@ -91,23 +98,28 @@ class TaskUpdateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+
 class TaskCreateView(APIView):
 
     def post(self, request):
         try:
+            # Den Titel aus den Request-Daten abrufen
             title = request.data.get('title')
             if not title:
                 return Response({"error": "Title is required"}, status=status.HTTP_400_BAD_REQUEST)
 
-
-            task = Task.objects.create(title=title, status='todo')
+            # Task mit dem authentifizierten Benutzer erstellen
+            task = Task.objects.create(title=title, status='todo', user=request.user)
             
+            # Task serialisieren
             serializer = TaskSerializer(task)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
         
+
 
 class TaskListView(ListAPIView):
     serializer_class = TaskSerializer
@@ -115,10 +127,21 @@ class TaskListView(ListAPIView):
     def get_queryset(self):
         user = self.request.user
         if user.is_authenticated:
-            return Task.objects.filter(user=user)
+            tasks = Task.objects.filter(user=user)
+            print(tasks)  
+            return tasks
         else:
             return Task.objects.none()
 
+    def get(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 
+
+
+class TestView(ListAPIView):
+    def get(self, request, *args, **kwargs):
+        return Response({"message": "Test successful"})
