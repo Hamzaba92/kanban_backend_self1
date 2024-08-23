@@ -18,7 +18,6 @@ from django.contrib.sessions.backends.db import SessionStore
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
 
 @method_decorator(csrf_exempt, name='dispatch')
 class RegisterView(View):
