@@ -68,7 +68,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'todolist',
+    'todolist.apps.TodolistConfig',
 ]
 
 MIDDLEWARE = [

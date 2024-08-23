@@ -46,7 +46,6 @@ class RegisterView(View):
             return JsonResponse({'error': str(e)}, status=500)
         
 
-
 @api_view(["GET"])
 @ensure_csrf_cookie
 def get_csrf_token(request):
@@ -64,11 +63,14 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+
+            if not Task.objects.filter(user=user).exists():
+                Task.objects.create(user=user, title='Get to Work', status='todo')
+
             return JsonResponse({'message': 'Login successful'})
         else:
             return JsonResponse({'error': 'Invalid credentials'}, status=400)
     return JsonResponse({'error': 'Invalid method'}, status=405)
-
 
 
 
@@ -82,7 +84,6 @@ class TaskDeleteView(APIView):
             return Response({"error": "Task not found"}, status=status.HTTP_404_NOT_FOUND)
 
         
-
 
 class TaskUpdateView(APIView):
     def put(self, request, pk, *args, **kwargs):
@@ -122,17 +123,15 @@ class TaskListView(ListAPIView):
         user = self.request.user
         if user.is_authenticated:
             tasks = Task.objects.filter(user=user)
-            print(tasks)  
             return tasks
         else:
+            print("User not authenticated or no tasks found")
             return Task.objects.none()
 
     def get(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
-
-
 
 
 
