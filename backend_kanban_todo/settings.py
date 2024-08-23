@@ -59,6 +59,9 @@ CSRF_COOKIE_SECURE = False
 CSRF_USE_SESSIONS = False
 
 
+
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

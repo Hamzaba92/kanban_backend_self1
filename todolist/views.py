@@ -17,6 +17,8 @@ from rest_framework.generics import ListAPIView
 from django.contrib.sessions.backends.db import SessionStore
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 
 @method_decorator(csrf_exempt, name='dispatch')
 class RegisterView(View):
@@ -135,3 +137,12 @@ class TaskListView(ListAPIView):
 
 
 
+class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        profile_data = {
+            'first_name': request.user.first_name,
+            'last_name': request.user.last_name,
+        }
+        return Response(profile_data)
