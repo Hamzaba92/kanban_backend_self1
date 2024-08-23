@@ -102,22 +102,16 @@ class TaskUpdateView(APIView):
 class TaskCreateView(APIView):
 
     def post(self, request):
-        try:
-            # Den Titel aus den Request-Daten abrufen
-            title = request.data.get('title')
-            if not title:
-                return Response({"error": "Title is required"}, status=status.HTTP_400_BAD_REQUEST)
+        if not request.user.is_authenticated:
+            return Response({"error": "User is not authenticated"}, status=status.HTTP_401_UNAUTHORIZED)
 
-            # Task mit dem authentifizierten Benutzer erstellen
-            task = Task.objects.create(title=title, status='todo', user=request.user)
-            
-            # Task serialisieren
-            serializer = TaskSerializer(task)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
-        except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        title = request.data.get('title')
+        if not title:
+            return Response({"error": "Title is required"}, status=status.HTTP_400_BAD_REQUEST)
 
+        task = Task.objects.create(title=title, status='todo', user=request.user)
+        serializer = TaskSerializer(task)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
         
 
 
@@ -142,6 +136,3 @@ class TaskListView(ListAPIView):
 
 
 
-class TestView(ListAPIView):
-    def get(self, request, *args, **kwargs):
-        return Response({"message": "Test successful"})
