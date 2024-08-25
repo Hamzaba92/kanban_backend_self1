@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Views Documentation &#8212; Kanban-Backend-self_1  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=c058f7c8" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Serializers Documentation" href="serializers.html" />
+    <link rel="prev" title="Kanban-Backend-self_1 documentation" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-todolist.views">
+<span id="views-documentation"></span><h1>Views Documentation<a class="headerlink" href="#module-todolist.views" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="todolist.views.RegisterView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">todolist.views.</span></span><span class="sig-name descname"><span class="pre">RegisterView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/todolist/views.html#RegisterView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#todolist.views.RegisterView" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></p>
+<p>API View to handle user registration.</p>
+<p>This view handles the registration of a new user. It processes a POST request containing user details such as
+username, password, first name, last name, and email. The view uses Django’s <cite>UserCreationForm</cite> to validate
+and create the user. The CSRF protection is disabled for this view using the <cite>csrf_exempt</cite> decorator.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="todolist.views.RegisterView.dispatch">
+<span class="sig-name descname"><span class="pre">dispatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#todolist.views.RegisterView.dispatch" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="todolist.views.RegisterView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/todolist/views.html#RegisterView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#todolist.views.RegisterView.post" title="Link to this definition">¶</a></dt>
+<dd><p>Handle POST request to register a new user.</p>
+<p>This method processes the registration data sent in the request body as JSON. It uses the <cite>UserCreationForm</cite>
+to validate the user data. If the form is valid, a new user is created and saved. If there are validation errors
+or missing fields, appropriate error responses are returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>HttpRequest</em>) – The HTTP request object containing the registration data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A JSON response indicating the result of the registration:
+- On success: Returns a 201 status with a success message.
+- On validation errors: Returns a 400 status with error details.
+- On missing fields: Returns a 400 status with a specific error message.
+- On any other exception: Returns a 500 status with an error message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JsonResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="todolist.views.TaskCreateView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">todolist.views.</span></span><span class="sig-name descname"><span class="pre">TaskCreateView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/todolist/views.html#TaskCreateView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#todolist.views.TaskCreateView" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>API View to create a new task.</p>
+<p>This view handles the creation of a new task for the authenticated user. It requires the user to be authenticated,
+and it validates the presence of a task title. Optionally, the task can be assigned to another user if a valid
+<cite>assigned_to</cite> user ID is provided.</p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">post(request):</span></span></dt>
+<dd><p>Handles the POST request to create a new task. Returns a JSON response with the created task data if successful,
+or an error message with the appropriate HTTP status code.</p>
+</dd></dl>
+
+<p class="rubric">Example</p>
+<p>POST /api/tasks/
+{</p>
+<blockquote>
+<div><p>“title”: “Finish project report”,
+“assigned_to”: 3</p>
+</div></blockquote>
+<p>}</p>
+<section id="possible-responses">
+<h2>Possible Responses<a class="headerlink" href="#possible-responses" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>201 Created: Task successfully created</p></li>
+<li><p>400 Bad Request: Missing title in the request data</p></li>
+<li><p>401 Unauthorized: User is not authenticated</p></li>
+<li><p>404 Not Found: Assigned user does not exist</p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="todolist.views.TaskCreateView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/todolist/views.html#TaskCreateView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#todolist.views.TaskCreateView.post" title="Link to this definition">¶</a></dt>
+<dd><p>Handle POST request to create a new task.</p>
+<p>The request must contain a ‘title’ in the data. If the ‘assigned_to’ field is provided, it should correspond
+to a valid user ID. The task is created with a default status of ‘todo’ and is associated with the authenticated user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>Request</em>) – The request object containing the data for the new task, including ‘title’ and optionally ‘assigned_to’.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>Response</em> – A Response object containing the serialized task data with a status code of 201 on success, or an error message
+with the corresponding status code on failure.</p></li>
+<li><p><em>Errors</em></p></li>
+<li><p><em>——</em></p></li>
+<li><p><strong>- 401 Unauthorized</strong> (<em>Returned if the user is not authenticated.</em>)</p></li>
+<li><p><strong>- 400 Bad Request</strong> (<em>Returned if the ‘title’ field is missing.</em>)</p></li>
+<li><p><strong>- 404 Not Found</strong> (<em>Returned if the ‘assigned_to’ user ID does not exist.</em>)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="todolist.views.TaskDeleteView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">todolist.views.</span></span><span class="sig-name descname"><span class="pre">TaskDeleteView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/todolist/views.html#TaskDeleteView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#todolist.views.TaskDeleteView" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>API View to delete an existing task.</p>
+<p>This view handles the deletion of an existing task. The task is identified by its primary key (<cite>pk</cite>).
+If the task is found, it is deleted and a success message is returned. If the task does not exist,
+a 404 Not Found response is returned.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="todolist.views.TaskDeleteView.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/todolist/views.html#TaskDeleteView.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#todolist.views.TaskDeleteView.delete" title="Link to this definition">¶</a></dt>
+<dd><p>Handle DELETE request to remove an existing task.</p>
+<p>This method attempts to delete a task identified by the provided primary key (<cite>pk</cite>). If the task is successfully
+deleted, a confirmation message is returned. If the task is not found, a 404 Not Found response is returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>request</strong> (<em>Request</em>) – The HTTP request object.</p></li>
+<li><p><strong>pk</strong> (<em>int</em>) – The primary key of the task to be deleted.</p></li>
+<li><p><strong>*args</strong> (<em>tuple</em>) – Additional positional arguments.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A Response object containing a success message if the task is deleted successfully. If the task is not found,
+a 404 Not Found response is returned.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="todolist.views.TaskListView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">todolist.views.</span></span><span class="sig-name descname"><span class="pre">TaskListView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/todolist/views.html#TaskListView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#todolist.views.TaskListView" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ListAPIView</span></code></p>
+<p>API View to list tasks for the authenticated user.</p>
+<p>This view returns a list of tasks that belong to the authenticated user or are assigned to them. The view uses the
+<cite>TaskSerializer</cite> to serialize the task data.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="todolist.views.TaskListView.serializer_class">
+<span class="sig-name descname"><span class="pre">serializer_class</span></span><a class="headerlink" href="#todolist.views.TaskListView.serializer_class" title="Link to this definition">¶</a></dt>
+<dd><p>Specifies the serializer class to be used for the task data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="serializers.html#todolist.serializers.TaskSerializer" title="todolist.serializers.TaskSerializer">TaskSerializer</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="todolist.views.TaskListView.get_queryset">
+<span class="sig-name descname"><span class="pre">get_queryset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/todolist/views.html#TaskListView.get_queryset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#todolist.views.TaskListView.get_queryset" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieves the queryset of tasks for the authenticated user, including tasks created by the user or assigned to the user.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="todolist.views.TaskListView.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">\*args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">\*\*kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/todolist/views.html#TaskListView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#todolist.views.TaskListView.get" title="Link to this definition">¶</a></dt>
+<dd><p>Handles the GET request to return the serialized list of tasks for the authenticated user.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/todolist/views.html#TaskListView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
+<dd><p>Handle GET request to return the list of tasks for the authenticated user.</p>
+<p>This method retrieves the queryset of tasks using <cite>get_queryset</cite>, serializes the data using the specified
+serializer, and returns the serialized data as a JSON response.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>request</strong> (<em>Request</em>) – The HTTP request object.</p></li>
+<li><p><strong>*args</strong> (<em>tuple</em>) – Additional positional arguments.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A Response object containing the serialized task data for the authenticated user.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">get_queryset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/todolist/views.html#TaskListView.get_queryset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieve the queryset of tasks for the authenticated user.</p>
+<p>This method filters tasks based on the authenticated user. It includes tasks that the user has created
+as well as tasks that are assigned to the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A queryset containing tasks related to the authenticated user. Returns an empty queryset if the user
+is not authenticated.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>QuerySet</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">serializer_class</span></span><a class="headerlink" href="#id2" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="serializers.html#todolist.serializers.TaskSerializer" title="todolist.serializers.TaskSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaskSerializer</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="todolist.views.TaskUpdateView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">todolist.views.</span></span><span class="sig-name descname"><span class="pre">TaskUpdateView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/todolist/views.html#TaskUpdateView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#todolist.views.TaskUpdateView" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>API View to update an existing task.</p>
+<p>This view handles updating an existing task’s details. The user can update the task’s title, status, and the user
+to whom the task is assigned. If the task or assigned user does not exist, appropriate error responses are returned.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="todolist.views.TaskUpdateView.put">
+<span class="sig-name descname"><span class="pre">put</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/todolist/views.html#TaskUpdateView.put"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#todolist.views.TaskUpdateView.put" title="Link to this definition">¶</a></dt>
+<dd><p>Handle PUT request to update an existing task.</p>
+<p>This method attempts to update a task with the provided primary key (<cite>pk</cite>). It updates the task’s fields with the
+data provided in the request. If the <cite>assigned_to</cite> field is provided, it checks if the user exists and assigns
+the task to that user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>request</strong> (<em>Request</em>) – The HTTP request object containing the updated task data.</p></li>
+<li><p><strong>pk</strong> (<em>int</em>) – The primary key of the task to be updated.</p></li>
+<li><p><strong>*args</strong> (<em>tuple</em>) – Additional positional arguments.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A Response object containing the serialized task data if the update is successful.
+If the task or assigned user is not found, a 404 Not Found response is returned.
+If the data is invalid, a 400 Bad Request response is returned.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="todolist.views.UserListView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">todolist.views.</span></span><span class="sig-name descname"><span class="pre">UserListView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/todolist/views.html#UserListView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#todolist.views.UserListView" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>API View to retrieve a list of all users.</p>
+<p>This view handles GET requests to retrieve a list of all users in the system. Each user’s basic information,
+including ID, first name, and last name, is returned in the response. The view is protected by authentication,
+so only authenticated users can access this endpoint.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="todolist.views.UserListView.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/todolist/views.html#UserListView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#todolist.views.UserListView.get" title="Link to this definition">¶</a></dt>
+<dd><p>Handle GET request to return a list of all users.</p>
+<p>This method retrieves all user records from the database and serializes their ID, first name, and last name into
+a list of dictionaries. The resulting list is then returned as a JSON response.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>request</strong> (<em>HttpRequest</em>) – The HTTP request object, which contains the authenticated user’s information.</p></li>
+<li><p><strong>*args</strong> (<em>tuple</em>) – Additional positional arguments.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A JSON response containing a list of all users, where each user is represented by a dictionary with their ID,
+first name, and last name.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="todolist.views.UserListView.permission_classes">
+<span class="sig-name descname"><span class="pre">permission_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.permissions.IsAuthenticated'&gt;]</span></em><a class="headerlink" href="#todolist.views.UserListView.permission_classes" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="todolist.views.UserProfileView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">todolist.views.</span></span><span class="sig-name descname"><span class="pre">UserProfileView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/todolist/views.html#UserProfileView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#todolist.views.UserProfileView" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>API View to retrieve the authenticated user’s profile information.</p>
+<p>This view handles GET requests to retrieve basic profile information (first name and last name) of the authenticated user.
+The view is protected by authentication, meaning only authenticated users can access this endpoint.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="todolist.views.UserProfileView.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/todolist/views.html#UserProfileView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#todolist.views.UserProfileView.get" title="Link to this definition">¶</a></dt>
+<dd><p>Handle GET request to return the authenticated user’s profile data.</p>
+<p>This method retrieves the first name and last name of the authenticated user from the request object and
+returns it in the response.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>HttpRequest</em>) – The HTTP request object, which contains the authenticated user’s information.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A JSON response containing the user’s first name and last name.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="todolist.views.UserProfileView.permission_classes">
+<span class="sig-name descname"><span class="pre">permission_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.permissions.IsAuthenticated'&gt;]</span></em><a class="headerlink" href="#todolist.views.UserProfileView.permission_classes" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="todolist.views.get_csrf_token">
+<span class="sig-prename descclassname"><span class="pre">todolist.views.</span></span><span class="sig-name descname"><span class="pre">get_csrf_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/todolist/views.html#get_csrf_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#todolist.views.get_csrf_token" title="Link to this definition">¶</a></dt>
+<dd><p>Handle GET request to provide a CSRF token.</p>
+<p>This view returns a CSRF token in the response, ensuring that the CSRF cookie is set. The CSRF token is typically
+used in subsequent requests that require CSRF protection.</p>
+<p>The view is decorated with <cite>&#64;ensure_csrf_cookie</cite> to ensure that the CSRF cookie is set in the user’s browser if it
+is not already present. It is also decorated with <cite>&#64;api_view([“GET”])</cite> to ensure that only GET requests are allowed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>HttpRequest</em>) – The HTTP request object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A JSON response containing the CSRF token. The response includes a key <cite>csrfToken</cite> with the token as its value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JsonResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="todolist.views.login_view">
+<span class="sig-prename descclassname"><span class="pre">todolist.views.</span></span><span class="sig-name descname"><span class="pre">login_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/todolist/views.html#login_view"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#todolist.views.login_view" title="Link to this definition">¶</a></dt>
+<dd><p>Handle user login requests.</p>
+<p>This view processes POST requests to authenticate a user with a username and password. If the credentials are valid,
+the user is logged in and a default task is created if none exist for the user. The view returns a success message
+on successful login, or an error message if the credentials are invalid or if the request method is not POST.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>HttpRequest</em>) – The HTTP request object containing the request data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A JSON response with a success message if login is successful, or an error message with the appropriate
+HTTP status code if login fails or if the request method is invalid.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JsonResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="todolist.views.logout_view">
+<span class="sig-prename descclassname"><span class="pre">todolist.views.</span></span><span class="sig-name descname"><span class="pre">logout_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/todolist/views.html#logout_view"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#todolist.views.logout_view" title="Link to this definition">¶</a></dt>
+<dd><p>Handle user logout requests.</p>
+<p>This view processes POST requests to log out the authenticated user. It also rotates the CSRF token to ensure that
+a new token is used in subsequent requests. Upon successful logout, a success message is returned. If the request
+method is not POST, an error message is returned with a 405 status code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>HttpRequest</em>) – The HTTP request object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A JSON response indicating the result of the logout operation:
+- On success: Returns a 200 status with a success message.
+- On invalid method: Returns a 405 status with an error message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JsonResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Kanban-Backend-self_1</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Views Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#todolist.views.RegisterView"><code class="docutils literal notranslate"><span class="pre">RegisterView</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#todolist.views.TaskCreateView"><code class="docutils literal notranslate"><span class="pre">TaskCreateView</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#todolist.views.TaskDeleteView"><code class="docutils literal notranslate"><span class="pre">TaskDeleteView</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#todolist.views.TaskListView"><code class="docutils literal notranslate"><span class="pre">TaskListView</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#todolist.views.TaskUpdateView"><code class="docutils literal notranslate"><span class="pre">TaskUpdateView</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#todolist.views.UserListView"><code class="docutils literal notranslate"><span class="pre">UserListView</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#todolist.views.UserProfileView"><code class="docutils literal notranslate"><span class="pre">UserProfileView</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#todolist.views.get_csrf_token"><code class="docutils literal notranslate"><span class="pre">get_csrf_token()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#todolist.views.login_view"><code class="docutils literal notranslate"><span class="pre">login_view()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#todolist.views.logout_view"><code class="docutils literal notranslate"><span class="pre">logout_view()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="serializers.html">Serializers Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals Documentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Kanban-Backend-self_1 documentation</a></li>
+      <li>Next: <a href="serializers.html" title="next chapter">Serializers Documentation</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, baby-lion.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.0.2</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/views.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

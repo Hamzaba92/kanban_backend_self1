@@ -1,9 +1,9 @@
 
 from django.contrib import admin
 from django.urls import path
-from todolist.views import RegisterView, TaskCreateView, TaskListView, UserProfileView,  get_csrf_token
+from todolist.views import RegisterView, TaskCreateView, TaskListView, UserProfileView,  get_csrf_token, logout_view
 from todolist.views import login_view
-from todolist.views import TaskCreateView, TaskUpdateView, TaskDeleteView
+from todolist.views import TaskCreateView, TaskUpdateView, TaskDeleteView, UserListView
 
 urlpatterns = [
     
@@ -15,5 +15,7 @@ urlpatterns = [
     path('tasks/<int:pk>/', TaskUpdateView.as_view(), name='task-update'),
     path('tasks/<int:pk>/delete/', TaskDeleteView.as_view(), name='task-delete'),
     path('loadTasks/', TaskListView.as_view(), name='task-list'),
-    path('api/getusername/', UserProfileView.as_view(), name='getusername-for-greet')
+    path('api/getusername/', UserProfileView.as_view(), name='getusername-for-greet'),
+    path('api/users/', UserListView.as_view(), name='user-list'),
+    path('api/logout', logout_view, name='remove-token-logout')
 ]
