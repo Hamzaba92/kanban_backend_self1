@@ -52,8 +52,6 @@
 <span class="kn">from</span> <span class="nn">rest_framework.decorators</span> <span class="kn">import</span> <span class="n">api_view</span>
 <span class="kn">from</span> <span class="nn">rest_framework.permissions</span> <span class="kn">import</span> <span class="n">IsAuthenticated</span>
 <span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
-<span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">logout</span>
-<span class="kn">from</span> <span class="nn">django.middleware.csrf</span> <span class="kn">import</span> <span class="n">rotate_token</span>
 
 
 <div class="viewcode-block" id="RegisterView">
@@ -560,34 +558,6 @@
     
 
 
-<div class="viewcode-block" id="logout_view">
-<a class="viewcode-back" href="../../views.html#todolist.views.logout_view">[docs]</a>
-<span class="k">def</span> <span class="nf">logout_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Handle user logout requests.</span>
-
-<span class="sd">    This view processes POST requests to log out the authenticated user. It also rotates the CSRF token to ensure that </span>
-<span class="sd">    a new token is used in subsequent requests. Upon successful logout, a success message is returned. If the request </span>
-<span class="sd">    method is not POST, an error message is returned with a 405 status code.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    request : HttpRequest</span>
-<span class="sd">        The HTTP request object.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    JsonResponse</span>
-<span class="sd">        A JSON response indicating the result of the logout operation:</span>
-<span class="sd">        - On success: Returns a 200 status with a success message.</span>
-<span class="sd">        - On invalid method: Returns a 405 status with an error message.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
-        <span class="n">logout</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-        <span class="n">rotate_token</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;Logout successful&#39;</span><span class="p">})</span>
-    
-    <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Invalid method&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">405</span><span class="p">)</span></div>
 
 </pre></div>
 
@@ -619,6 +589,11 @@
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../views.html">Views Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../serializers.html">Serializers Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../signals.html">Signals Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Models Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../forms.html">Forms Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../admin.html">Admin Documentation</a></li>
 </ul>
 
 <div class="relations">

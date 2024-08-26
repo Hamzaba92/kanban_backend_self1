@@ -396,28 +396,6 @@ HTTP status code if login fails or if the request method is invalid.</p>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="todolist.views.logout_view">
-<span class="sig-prename descclassname"><span class="pre">todolist.views.</span></span><span class="sig-name descname"><span class="pre">logout_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/todolist/views.html#logout_view"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#todolist.views.logout_view" title="Link to this definition">¶</a></dt>
-<dd><p>Handle user logout requests.</p>
-<p>This view processes POST requests to log out the authenticated user. It also rotates the CSRF token to ensure that
-a new token is used in subsequent requests. Upon successful logout, a success message is returned. If the request
-method is not POST, an error message is returned with a 405 status code.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>request</strong> (<em>HttpRequest</em>) – The HTTP request object.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A JSON response indicating the result of the logout operation:
-- On success: Returns a 200 status with a success message.
-- On invalid method: Returns a 405 status with an error message.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>JsonResponse</p>
-</dd>
-</dl>
-</dd></dl>
-
 </section>
 
 
@@ -458,11 +436,13 @@ method is not POST, an error message is returned with a 405 status code.</p>
 <li class="toctree-l2"><a class="reference internal" href="#todolist.views.UserProfileView"><code class="docutils literal notranslate"><span class="pre">UserProfileView</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#todolist.views.get_csrf_token"><code class="docutils literal notranslate"><span class="pre">get_csrf_token()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#todolist.views.login_view"><code class="docutils literal notranslate"><span class="pre">login_view()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#todolist.views.logout_view"><code class="docutils literal notranslate"><span class="pre">logout_view()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="serializers.html">Serializers Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signals.html">Signals Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="forms.html">Forms Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="admin.html">Admin Documentation</a></li>
 </ul>
 
 <div class="relations">

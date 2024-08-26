@@ -19,8 +19,6 @@ from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
-from django.contrib.auth import logout
-from django.middleware.csrf import rotate_token
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -476,29 +474,4 @@ class UserListView(APIView):
     
 
 
-def logout_view(request):
-    """
-    Handle user logout requests.
 
-    This view processes POST requests to log out the authenticated user. It also rotates the CSRF token to ensure that 
-    a new token is used in subsequent requests. Upon successful logout, a success message is returned. If the request 
-    method is not POST, an error message is returned with a 405 status code.
-
-    Parameters
-    ----------
-    request : HttpRequest
-        The HTTP request object.
-
-    Returns
-    -------
-    JsonResponse
-        A JSON response indicating the result of the logout operation:
-        - On success: Returns a 200 status with a success message.
-        - On invalid method: Returns a 405 status with an error message.
-    """
-    if request.method == 'POST':
-        logout(request)
-        rotate_token(request)
-        return JsonResponse({'message': 'Logout successful'})
-    
-    return JsonResponse({'error': 'Invalid method'}, status=405)
